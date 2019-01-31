@@ -18,3 +18,12 @@ services:
       - ./config/s2s-grpc-envoy.yaml:/etc/s2s-grpc-envoy.yaml
     expose:
       - "9211"
+
+  grpc2:
+    build:
+      context: .
+      dockerfile: Dockerfile-grpc
+    volumes:
+      - ./config/s2s-grpc-envoy.yaml:/etc/s2s-grpc-envoy.yaml
+    expose:
+      - "9211"
