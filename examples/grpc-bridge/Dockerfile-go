@@ -1,0 +1,4 @@
+FROM bash:latest
+
+COPY ./bin/service /usr/local/bin/srv
+CMD ["/usr/local/bin/srv"]

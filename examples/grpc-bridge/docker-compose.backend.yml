@@ -1,0 +1,27 @@
+version: '3.5'
+services: 
+  grpc:
+    build:
+      context: .
+      dockerfile: Dockerfile-go
+    networks: 
+      - back
+    expose:
+      - "8081"
+
+  grpc-sidecar:
+    build:
+        context: .
+        dockerfile: Dockerfile-sidecar
+    volumes:
+      - ./config/s2s-envoy-sidecar.yaml:/etc/s2s-envoy-sidecar.yaml
+    networks: 
+      - back-gate
+      - back
+    expose:
+      - "9211"
+
+networks: 
+  back-gate:
+    name: back-grpc
+  back: {}

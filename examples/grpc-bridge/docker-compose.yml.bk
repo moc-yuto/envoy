@@ -1,4 +1,4 @@
-version: '2'
+version: '3.5'
 services:
 
   python:
@@ -9,21 +9,32 @@ services:
       - ./config/s2s-python-envoy.yaml:/etc/s2s-python-envoy.yaml
     expose:
       - "9001"
-
+    networks: 
+      - front
   grpc:
     build:
       context: .
-      dockerfile: Dockerfile-grpc
-    volumes:
-      - ./config/s2s-grpc-envoy.yaml:/etc/s2s-grpc-envoy.yaml
+      dockerfile: Dockerfile-go
+    networks: 
+      - back
     expose:
-      - "9211"
+      - "8081"
 
-  grpc2:
+  grpc-sidecar:
     build:
-      context: .
-      dockerfile: Dockerfile-grpc
+        context: .
+        dockerfile: Dockerfile-grpc
     volumes:
       - ./config/s2s-grpc-envoy.yaml:/etc/s2s-grpc-envoy.yaml
+    networks: 
+      - back
     expose:
-      - "9211"
+      - "9211"   
+
+networks: 
+  front:
+    driver: bridge
+  back:
+    driver: bridge
+  envoy-pod:
+    driver: bridge

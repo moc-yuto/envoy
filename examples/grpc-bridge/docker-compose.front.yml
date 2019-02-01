@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+
+  python:
+    build:
+      context: .
+      dockerfile: Dockerfile-python
+    volumes:
+      - ./config/s2s-python-envoy.yaml:/etc/s2s-python-envoy.yaml
+    expose:
+      - "9001"
+    networks: 
+      - back-grpc
+      - front
+
+networks: 
+  back-grpc:
+    external: true
+  front: {}

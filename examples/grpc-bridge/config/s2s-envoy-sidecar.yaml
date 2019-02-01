@@ -9,6 +9,10 @@ static_resources:
       - name: envoy.http_connection_manager
         config:
           codec_type: auto
+          access_log:
+          - name: envoy.http_grpc_access_log
+            config:
+              path: "/var/log/envoy/ingress_http.log"
           stat_prefix: ingress_http
           route_config:
             name: local_route
@@ -28,12 +32,12 @@ static_resources:
   clusters:
   - name: local_service_grpc
     connect_timeout: 0.250s
-    type: static
+    type: strict_dns
     lb_policy: round_robin
     http2_protocol_options: {}
     hosts:
     - socket_address:
-        address: 127.0.0.1
+        address: grpc
         port_value: 8081
 admin:
   access_log_path: "/var/log/envoy/admin_access.log"
