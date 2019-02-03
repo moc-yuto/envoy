@@ -10,7 +10,7 @@ static_resources:
         config:
           codec_type: auto
           access_log:
-          - name: envoy.http_grpc_access_log
+          - name: envoy.file_access_log
             config:
               path: "/var/log/envoy/ingress_http.log"
           stat_prefix: ingress_http
